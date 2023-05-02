@@ -1,20 +1,17 @@
 package ru.netology.javaqa6.services;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class CalcServiceTest {
-    @Test
-    public void testCalculationCase1() {
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/CalcServiseTestResource.csv")
+    public void testCalculationCase1(int income, int expenses, int threshold, int result) {
         CalcService service = new CalcService();
 
-        Assertions.assertEquals(3, service.calculate(10_000, 3_000, 20_000));
-    }
-    @Test
-    public void testCalculationCase2() {
-        CalcService service = new CalcService();
-
-        Assertions.assertEquals(2, service.calculate(100_000, 60_000, 150_000));
+        Assertions.assertEquals(result, service.calculate(income, expenses, threshold));
     }
 
 }
